@@ -1,19 +1,16 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go
+name: CI
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     strategy:
       matrix:
-        go: 
+        go:
           - '1.21'
           - '1.22'
 
@@ -27,9 +24,8 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-    - name: Build
-      run: go build -v ./...
+      - name: Go test
+        run: go test -v ./...
 
-    - name: Test
-      run: go test -v ./...
-
+      - name: Go build
+        run: go build -v ./...
